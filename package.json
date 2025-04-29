@@ -1,0 +1,16 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "description": "File manager task for RSSchool",
+  "license": "ISC",
+  "author": "",
+  "main": "main.js",
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "type": "module",
+  "scripts": {
+    "start:dev": "node src/main.js --username=dev_username",
+    "start":  "node src/main.js"
+}
+}
