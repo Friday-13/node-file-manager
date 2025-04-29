@@ -11,6 +11,6 @@
   "type": "module",
   "scripts": {
     "start:dev": "node src/main.js --username=dev_username",
-    "start":  "node src/main.js"
-}
+    "start": "node src/main.js"
+  }
 }
