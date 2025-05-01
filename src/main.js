@@ -3,4 +3,4 @@ import process from "node:process";
 
 let app = new App("");
 await app.start();
-process.on("beforeExit", () => app.exit());
+process.on("SIGINT", () => app.exit());

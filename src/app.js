@@ -1,23 +1,29 @@
-import { stdout } from "node:process";
+import { stdin, stdout, exit } from "node:process";
 
 import { getProcessArgs } from "./utils/get_process_args.js";
+import FileManger from "./file-manager.js";
 
 export default class App {
   constructor() {
-    this.fileManger = null;
+    this.fileManger = new FileManger();
     this.username = undefined;
   }
 
   async start() {
     const args = getProcessArgs();
     this.username = args.get("username");
-
-    stdout.write(`Welcome to the File Manager, ${this.username}!\n`);
+    console.log(`Welcome to the File Manager, ${this.username}!`);
+    stdin.on("data", (data) => {
+      const command = data.toString().trim();
+      if (command === ".exit") {
+        this.exit();
+      }
+      this.fileManger.parseOperation(data.toString().trim());
+    });
   }
 
   exit() {
-    stdout.write(
-      `Thank you for using File Manager, ${this.username}, goodbye!\n`,
-    );
+    console.log(`\nThank you for using File Manager, ${this.username}, goodbye!`);
+    exit(0);
   }
 }
