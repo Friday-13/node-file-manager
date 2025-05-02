@@ -26,8 +26,8 @@ const contentSort = (itemA, itemB) => {
   const [nameA, typeA] = itemA;
   const [nameB, typeB] = itemB;
 
-  const typeOrder = typePriority[typeA] - typePriority[typeB]
-  const nameOrder = nameA.localeCompare(nameB)
+  const typeOrder = typePriority[typeA] - typePriority[typeB];
+  const nameOrder = nameA.localeCompare(nameB);
 
   if (typeOrder === 0) {
     return nameOrder;
@@ -52,4 +52,4 @@ const lsOutput = (result) => {
 };
 
 const ls = new BaseOperation("ls", lsHandler, lsOutput);
-export {ls as default}; 
+export { ls as default };

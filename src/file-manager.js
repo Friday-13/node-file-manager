@@ -1,35 +1,40 @@
-import os from "node:os";
-import path from "node:path"
-
 export default class FileManger {
-  constructor() {
-    this.workDir = os.homedir();
+  constructor(workDir, printPrompt) {
+    this._workDir = workDir;
     this.operations = [];
+    this.printPrompt = printPrompt;
   }
 
   addOperations(operations) {
     this.operations.push(...operations);
   }
 
-  setWorkDir(newDir) {
-    if (typeof newDir === 'string') {
-      this.workDir = path.normalize(newDir);
-    }
-    else if (newDir instanceof Array) {
-      this.workDir = path.join();
-    } else {
-      throw new Error("Incorrect path format")
+  get workDir() {
+    return this._workDir.workDir;
+  }
+
+  async setWorkDir(newDir) {
+    try {
+      await this._workDir.setWorkDir(newDir);
+    } catch (err) {
+      if (err.code === "WDERROR") {
+        console.error(err.message);
+      }
     }
   }
 
   async parseOperation(operationKey, operationValue) {
     for (const operation of this.operations) {
       if (operationKey === operation.key) {
-        const result = await operation.handler({value: operationValue, fileManager: this});
+        const result = await operation.handler({
+          values: operationValue,
+          fileManager: this,
+        });
         operation.output(result);
+        this.printPrompt();
         return;
       }
     }
-    console.log('Invalid input')
+    console.error("Invalid input");
   }
 }

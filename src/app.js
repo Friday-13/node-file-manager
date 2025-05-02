@@ -3,10 +3,14 @@ import { stdin, exit } from "node:process";
 import { getProcessArgs } from "./utils/get_process_args.js";
 import FileManger from "./file-manager.js";
 import nwdOperations from "./operations/nwd/index.js";
+import WorkDir from "./utils/work-dir.js";
 
 export default class App {
   constructor() {
-    this.fileManger = new FileManger();
+    this.fileManger = new FileManger(
+      new WorkDir({}),
+      this.printPrompt.bind(this),
+    );
     this.username = undefined;
     this.fileManger.addOperations(nwdOperations);
   }
@@ -15,12 +19,14 @@ export default class App {
     const args = getProcessArgs();
     this.username = args.get("username");
     console.log(`Welcome to the File Manager, ${this.username}!`);
+    this.printPrompt();
     stdin.on("data", (data) => {
       const command = data.toString().trim();
       if (command === ".exit") {
         this.exit();
       }
-      this.fileManger.parseOperation(data.toString().trim());
+      const [key, ...value] = data.toString().trim().split(" ");
+      this.fileManger.parseOperation(key, value);
     });
   }
 
@@ -29,5 +35,9 @@ export default class App {
       `\nThank you for using File Manager, ${this.username}, goodbye!`,
     );
     exit(0);
+  }
+
+  printPrompt() {
+    console.log(`You are currently in ${this.fileManger.workDir}`);
   }
 }
