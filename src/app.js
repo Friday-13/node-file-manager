@@ -2,8 +2,9 @@ import { stdin, exit } from "node:process";
 
 import { getProcessArgs } from "./utils/get_process_args.js";
 import FileManger from "./file-manager.js";
-import nwdOperations from "./operations/nwd/index.js";
 import WorkDir from "./utils/work-dir.js";
+import nwdOperations from "./operations/nwd/index.js";
+import fileOperations from "./operations/files/index.js";
 
 export default class App {
   constructor() {
@@ -13,6 +14,7 @@ export default class App {
     );
     this.username = undefined;
     this.fileManger.addOperations(nwdOperations);
+    this.fileManger.addOperations(fileOperations);
   }
 
   async start() {
