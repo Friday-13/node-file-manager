@@ -17,7 +17,7 @@ export default class FileManger {
     try {
       await this._workDir.setWorkDir(newDir);
     } catch (err) {
-      if (err.code === "WDERROR") {
+      if (err.code === "PATHINVALID") {
         console.error(err.message);
       }
     }
