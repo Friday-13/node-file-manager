@@ -17,7 +17,7 @@ export default class WorkDir {
 
   async setWorkDir(rawPath) {
     const absolutePath = this.getAbsolutePath(rawPath);
-    await this.verifyPass(absolutePath);
+    await this.verifyPath(absolutePath);
     this.workDir = absolutePath;
   }
 
@@ -30,7 +30,7 @@ export default class WorkDir {
     return path.normalize(absolutePath);
   }
 
-  async verifyPass(clearPath) {
+  async verifyPath(clearPath) {
     await this.isPathExist(clearPath);
     await this.isDir(clearPath);
     this.isLowerThanBase(clearPath);
