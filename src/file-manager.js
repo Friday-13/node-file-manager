@@ -1,3 +1,5 @@
+import { operationErrorCode } from "./utils/operation-error.js";
+
 export default class FileManger {
   constructor(workDir, printPrompt) {
     this._workDir = workDir;
@@ -24,17 +26,24 @@ export default class FileManger {
   }
 
   async parseOperation(operationKey, operationValue) {
-    for (const operation of this.operations) {
-      if (operationKey === operation.key) {
-        const result = await operation.handler({
-          values: operationValue,
-          fileManager: this,
-        });
-        await operation.output(result);
-        this.printPrompt();
-        return;
+    try {
+      for (const operation of this.operations) {
+        if (operationKey === operation.key) {
+          const result = await operation.handler({
+            values: operationValue,
+            fileManager: this,
+          });
+          await operation.output(result);
+          this.printPrompt();
+          return;
+        }
+      }
+      console.error("Invalid input");
+    } catch (err) {
+      if (err.code === operationErrorCode) {
+        console.log(err.message);
+        console.log("Operation failed");
       }
     }
-    console.error("Invalid input");
   }
 }
