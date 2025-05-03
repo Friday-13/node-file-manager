@@ -15,6 +15,10 @@ export default class FileManger {
     return this._workDir.workDir;
   }
 
+  get baseDir() {
+    return this._workDir.baseDir;
+  }
+
   async setWorkDir(newDir) {
     try {
       await this._workDir.setWorkDir(newDir);
