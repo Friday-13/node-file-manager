@@ -1,5 +1,4 @@
 import os from "node:os";
-
 import PathValidator from "./path-validator.js";
 import resolvePath from "./resolve-path.js";
 

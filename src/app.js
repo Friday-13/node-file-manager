@@ -1,6 +1,6 @@
 import { stdin, exit } from "node:process";
 
-import { getProcessArgs } from "./utils/get_process_args.js";
+import { getProcessArgs } from "./utils/get-process-args.js";
 import FileManger from "./file-manager.js";
 import WorkDir from "./utils/work-dir.js";
 import nwdOperations from "./operations/nwd/index.js";
