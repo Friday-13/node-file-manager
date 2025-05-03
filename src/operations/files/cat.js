@@ -1,19 +1,25 @@
 import BaseOperation from "../base-operation.js";
-import fs from "node:fs/promises";
-import path from "node:path";
+import resolvePath from "../../utils/resolve-path.js";
+import { createReadStream } from "node:fs";
 
 const catHandler = async ({ values, fileManager }) => {
-  // TODO: Add path resiolving
-  const absolutePath = path.join(fileManager.workDir, values[0]);
-  // TODO: Rewrite with readable stream
-  const content = await fs.readFile(absolutePath, { encoding: "utf-8" });
-  return content;
+  const absolutePath = resolvePath(values[0], fileManager.workDir);
+  const readStream = createReadStream(absolutePath, { encoding: "utf-8" });
+  return readStream;
 };
 
 const catOutput = (result) => {
-  console.group();
-  console.log(result);
-  console.groupEnd();
+  const readStream = new Promise((resolve) => {
+    result.on("open", () => console.group());
+    result.on("data", (chunk) => {
+      console.log(chunk);
+    });
+    result.on("end", () => {
+      console.groupEnd();
+      resolve();
+    });
+  });
+  return readStream;
 };
 
 const cat = new BaseOperation("cat", catHandler, catOutput);

@@ -30,7 +30,7 @@ export default class FileManger {
           values: operationValue,
           fileManager: this,
         });
-        operation.output(result);
+        await operation.output(result);
         this.printPrompt();
         return;
       }
