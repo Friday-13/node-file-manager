@@ -6,18 +6,23 @@ import PathValidator from "../../utils/path-validator.js";
 import { pipeline } from "node:stream/promises";
 import path from "node:path";
 import { createBrotliCompress } from "node:zlib";
+import resolveDestinationPath from "../../utils/resolve-destination-path.js";
 
 const compressHandler = async ({ values, fileManager }) => {
   try {
-    const filePath = resolvePath(values[0], fileManager.workDir);
-    const destinationPath = resolvePath(values[1], fileManager.workDir);
-
     const validator = new PathValidator(fileManager.baseDir);
 
+    const filePath = resolvePath(values[0], fileManager.workDir);
     await validator.validate(filePath, {
       mustBeInsideBase: true,
       mustBeFile: true,
     });
+
+    const destinationPath = await resolveDestinationPath(
+      values[1],
+      fileManager.workDir,
+      filePath,
+    );
     await validator.validate(destinationPath, {
       mustBeInsideBase: true,
     });

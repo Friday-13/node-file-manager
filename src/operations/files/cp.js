@@ -5,18 +5,23 @@ import OperationError from "../../utils/operation-error.js";
 import PathValidator from "../../utils/path-validator.js";
 import { createReadStream, createWriteStream } from "node:fs";
 import { pipeline } from "node:stream/promises";
+import resolveDestinationPath from "../../utils/resolve-destination-path.js";
 
 const cpHandler = async ({ values, fileManager }) => {
   try {
-    const oldAbsolutePath = resolvePath(values[0], fileManager.workDir);
-    const newAbsolutePath = resolvePath(values[1], fileManager.workDir);
-
     const validator = new PathValidator(fileManager.baseDir);
 
+    const oldAbsolutePath = resolvePath(values[0], fileManager.workDir);
     await validator.validate(oldAbsolutePath, {
       mustBeInsideBase: true,
       mustBeFile: true,
     });
+
+    const newAbsolutePath = await resolveDestinationPath(
+      values[1],
+      fileManager.workDir,
+      oldAbsolutePath,
+    );
     await validator.validate(newAbsolutePath, {
       mustBeInsideBase: true,
     });
