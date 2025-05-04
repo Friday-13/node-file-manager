@@ -11,9 +11,9 @@ const cpus = () => {
   const amount = allInfo.length;
   const summary = allInfo.map((value) => ({
     model: value.model,
-    speed: `${value.speed/ 1000}GHz`,
+    speed: `${value.speed / 1000}GHz`,
   }));
-  return {'amount of CPUs': amount, 'CPUs info': summary};
+  return { "amount of CPUs": amount, "CPUs info": summary };
 };
 
 const homedir = () => {

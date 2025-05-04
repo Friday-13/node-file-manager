@@ -6,6 +6,7 @@ import WorkDir from "./utils/work-dir.js";
 import nwdOperations from "./operations/nwd/index.js";
 import fileOperations from "./operations/files/index.js";
 import osInfoOperations from "./operations/os-info/index.js";
+import hashOperations from "./operations/hash/index.js";
 
 export default class App {
   constructor() {
@@ -17,6 +18,7 @@ export default class App {
     this.fileManger.addOperations(nwdOperations);
     this.fileManger.addOperations(fileOperations);
     this.fileManger.addOperations(osInfoOperations);
+    this.fileManger.addOperations(hashOperations);
   }
 
   async start() {

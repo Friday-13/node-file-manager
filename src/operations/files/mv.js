@@ -3,8 +3,8 @@ import cp from "./cp.js";
 import rm from "./rm.js";
 
 const mvHandler = async ({ values, fileManager }) => {
-  const result = await cp.handler({values, fileManager});
-  await rm.handler({values: [result.oldPath], fileManager: fileManager})
+  const result = await cp.handler({ values, fileManager });
+  await rm.handler({ values: [result.oldPath], fileManager: fileManager });
   return result;
 };
 
