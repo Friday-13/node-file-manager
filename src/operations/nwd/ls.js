@@ -43,7 +43,9 @@ const lsHandler = async ({ fileManager }) => {
     return [file, getFileType(fileType)];
   });
   const content = await Promise.all(contentPromises);
-  const sortedContent = content.sort(contentSort);
+  const sortedContent = content
+    .sort(contentSort)
+    .map((item) => ({ Name: item[0], Type: item[1] }));
   return sortedContent;
 };
 
