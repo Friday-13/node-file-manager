@@ -17,7 +17,7 @@ const catHandler = async ({ values, fileManager }) => {
 };
 
 const catOutput = (result) => {
-  const readStream = new Promise((resolve, reject) => {
+  const readPromise = new Promise((resolve, reject) => {
     result.on("open", () => console.group());
     result.on("data", (chunk) => {
       console.log(chunk);
@@ -35,7 +35,7 @@ const catOutput = (result) => {
       reject(new OperationError(err.message));
     });
   });
-  return readStream;
+  return readPromise;
 };
 
 const cat = new BaseOperation("cat", catHandler, catOutput);

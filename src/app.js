@@ -5,6 +5,7 @@ import FileManger from "./file-manager.js";
 import WorkDir from "./utils/work-dir.js";
 import nwdOperations from "./operations/nwd/index.js";
 import fileOperations from "./operations/files/index.js";
+import osInfoOperations from "./operations/os-info/index.js";
 
 export default class App {
   constructor() {
@@ -15,6 +16,7 @@ export default class App {
     this.username = undefined;
     this.fileManger.addOperations(nwdOperations);
     this.fileManger.addOperations(fileOperations);
+    this.fileManger.addOperations(osInfoOperations);
   }
 
   async start() {
