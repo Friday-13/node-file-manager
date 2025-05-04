@@ -11,7 +11,7 @@ class PathValidationError extends Error {
 
 export default class PathValidator {
   constructor(baseDir) {
-    this.baseDir = baseDir ? baseDir : os.homedir();
+    this.baseDir = baseDir ? baseDir : path.parse(os.homedir()).root;
   }
 
   async validate(

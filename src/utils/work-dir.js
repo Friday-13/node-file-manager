@@ -1,10 +1,11 @@
 import os from "node:os";
 import PathValidator from "./path-validator.js";
 import resolvePath from "./resolve-path.js";
+import path from "node:path";
 
 export default class WorkDir {
   constructor({ workDir, baseDir }) {
-    this.baseDir = baseDir ? baseDir : os.homedir();
+    this.baseDir = baseDir ? baseDir : path.parse(os.homedir()).root;
     this.workDir = workDir ? workDir : os.homedir();
   }
 

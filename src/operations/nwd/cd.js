@@ -1,7 +1,12 @@
+import OperationError from "../../utils/operation-error.js";
 import BaseOperation from "../base-operation.js";
 
 const cdHandler = async ({ values: values, fileManager }) => {
-  await fileManager.setWorkDir(values[0]);
+  try {
+    await fileManager.setWorkDir(values[0]);
+  } catch (err) {
+    throw new OperationError(err.message);
+  }
 };
 
 const cdOutput = () => {};

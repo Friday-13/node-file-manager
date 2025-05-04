@@ -20,13 +20,7 @@ export default class FileManger {
   }
 
   async setWorkDir(newDir) {
-    try {
-      await this._workDir.setWorkDir(newDir);
-    } catch (err) {
-      if (err.code === "PATHINVALID") {
-        console.error(err.message);
-      }
-    }
+    await this._workDir.setWorkDir(newDir);
   }
 
   async parseOperation(operationKey, operationValue) {
@@ -47,6 +41,7 @@ export default class FileManger {
       if (err.code === operationErrorCode) {
         console.log(err.message);
         console.log("Operation failed");
+        this.printPrompt();
       }
     }
   }
